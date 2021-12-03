@@ -1,0 +1,13 @@
+name: oso
+channels:
+  - conda-forge
+dependencies:
+  - python=3.9
+  - pip
+  # For pyright (language server)
+  - nodejs
+  # For eralchemy (DB schema visualisation)
+  - pip:
+    - black
+    - flake8
+    - oso
