@@ -1,0 +1,16 @@
+name: Run
+on: push
+jobs:
+  run:
+    name: Run
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: actions/checkout@v2
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          mamba-version: "*"
+          channels: conda-forge
+          activate-environment: oso
+          environment-file: environment.yaml
+      - shell: bash -l {0}
+        run: python app.py
