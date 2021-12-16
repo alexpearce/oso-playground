@@ -5,6 +5,18 @@ allow(actor: Actor, action: String, resource: Resource) if
 
 actor User {}
 
+actor UserToken {}
+
+# A Token has permission if it is a delegate of a User who has permission
+has_permission(token: UserToken, action: String, resource: Resource) if
+  token.is_delegate and
+  has_permission(token.owner, action, resource);
+
+# A Token is authorised if has all scopes required by the route being accessed
+# in the request
+allow_request(token: UserToken, request: Request) if
+  forall(request_scope in request.scopes, request_scope in token.scopes);
+
 resource Organisation {
     roles = [
         "owner",
